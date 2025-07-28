@@ -1,4 +1,4 @@
-import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, Pressable, Text, View } from "react-native";
 import React, { useState } from "react";
 import Input from "@/components/shared/Input";
 import Button from "@/components/shared/Button";
@@ -16,7 +16,7 @@ export default function SignIn() {
   const [password, setPassword] = useState<string>();
 
   const convex = useConvex();
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
 
   const onSignIn = async () => {
     if (!email || !password) {
@@ -29,11 +29,11 @@ export default function SignIn() {
         const userData = await convex.query(api.Users.GetUser, {
           email: email,
         });
-        console.log(userData);
+        console.log(user);
         setUser(userData);
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
         Alert.alert(

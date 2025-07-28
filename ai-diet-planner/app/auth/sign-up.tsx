@@ -1,5 +1,5 @@
-import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useContext, useState } from "react";
+import { Alert, Image, Pressable, Text, View } from "react-native";
+import React, { useState } from "react";
 import Input from "@/components/shared/Input";
 import Button from "@/components/shared/Button";
 import { useRouter } from "expo-router";
@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/services/FirebaseConfig";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { UserContext, useUser } from "@/context/UserContext";
+import { useUser } from "@/context/UserContext";
 
 export default function SignUp() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function SignUp() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const createNewUser = useMutation(api.Users.CreateNewUser);
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const onSignUp = async () => {
     if (!name || !email || !password) {
       Alert.alert("Missing Fields", "Enter All field Value");
@@ -39,7 +39,7 @@ export default function SignUp() {
         //...
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
       });

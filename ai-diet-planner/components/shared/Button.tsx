@@ -1,15 +1,16 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import Colors from "@/shared/Colors";
 interface ButtonProps {
   title: string;
   onPress: () => void;
+  icon?: any;
 }
-export default function Button({ title, onPress }: ButtonProps) {
+export default function Button({ title, onPress, icon }: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
-        padding: 15,
+        padding: 13,
         backgroundColor: Colors.PRIMARY,
         width: "100%",
         borderRadius: 10,
@@ -17,12 +18,12 @@ export default function Button({ title, onPress }: ButtonProps) {
     >
       <Text
         style={{
-          fontSize: 20,
+          fontSize: 18,
           color: Colors.WHITE,
           textAlign: "center",
         }}
       >
-        {title}
+        {icon} {title}
       </Text>
     </TouchableOpacity>
   );

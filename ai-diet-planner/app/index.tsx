@@ -2,8 +2,28 @@ import { Dimensions, Image, Text, View } from "react-native";
 import Colors from "./../shared/Colors";
 import Button from "@/components/shared/Button";
 import { useRouter } from "expo-router";
+import { useUser } from "@/context/UserContext";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/services/FirebaseConfig";
+import { useConvex } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useEffect } from "react";
 export default function Index() {
   const router = useRouter();
+  const { setUser } = useUser();
+  const convex = useConvex();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (userInfo) => {
+      const userData = await convex.query(api.Users.GetUser, {
+        email: userInfo?.email as string,
+      });
+      setUser(userData);
+      router.replace("/(tabs)/home");
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <Image
