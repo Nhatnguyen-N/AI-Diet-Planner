@@ -1,14 +1,16 @@
-import { Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import Colors from "@/shared/Colors";
 interface ButtonProps {
   title: string;
   onPress: () => void;
   icon?: any;
+  loading?: boolean;
 }
-export default function Button({ title, onPress, icon }: ButtonProps) {
+export default function Button({ title, onPress, icon, loading }: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={loading}
       style={{
         padding: 13,
         backgroundColor: Colors.PRIMARY,
@@ -16,15 +18,19 @@ export default function Button({ title, onPress, icon }: ButtonProps) {
         borderRadius: 10,
       }}
     >
-      <Text
-        style={{
-          fontSize: 18,
-          color: Colors.WHITE,
-          textAlign: "center",
-        }}
-      >
-        {icon} {title}
-      </Text>
+      {loading ? (
+        <ActivityIndicator color={Colors.WHITE} />
+      ) : (
+        <Text
+          style={{
+            fontSize: 18,
+            color: Colors.WHITE,
+            textAlign: "center",
+          }}
+        >
+          {icon} {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 }

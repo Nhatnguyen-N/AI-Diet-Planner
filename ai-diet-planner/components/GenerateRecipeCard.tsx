@@ -4,7 +4,9 @@ import Colors from "@/shared/Colors";
 import Button from "./shared/Button";
 import { HugeiconsIcon } from "@hugeicons/react-native";
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
+import { useRouter } from "expo-router";
 export default function GenerateRecipeCard() {
+  const router = useRouter();
   return (
     <LinearGradient
       colors={[Colors.BLUE, Colors.PRIMARY]}
@@ -34,6 +36,7 @@ export default function GenerateRecipeCard() {
         Let Our AI generate personalized recipes just for you!
       </Text>
       <TouchableOpacity
+        onPress={() => router.push("/generate-ai-recipe")}
         style={{
           padding: 12,
           backgroundColor: Colors.WHITE,
