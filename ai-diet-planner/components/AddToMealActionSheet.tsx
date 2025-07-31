@@ -13,6 +13,7 @@ import Button from "./shared/Button";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@/context/UserContext";
+import DateSelectionCard from "./DateSelectionCard";
 interface AddToMealActionSheetProps {
   recipeDetail: RecipeSelectedGenerate;
   hideActionSheet: () => void;
@@ -21,7 +22,6 @@ export default function AddToMealActionSheet({
   recipeDetail,
   hideActionSheet,
 }: AddToMealActionSheetProps) {
-  const [dateList, setDateList] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>();
   const [selectedMeal, setSelectedMeal] = useState<string>();
   const CreateMeal = useMutation(api.MealPlan.CreateMealPlan);
@@ -40,18 +40,7 @@ export default function AddToMealActionSheet({
       icon: Moon02Icon,
     },
   ];
-  useEffect(() => {
-    GenerateDates();
-  }, []);
 
-  const GenerateDates = () => {
-    const result = [];
-    for (let i = 0; i < 4; i++) {
-      const nextDate = moment().add(i, "days").format("DD/MM/YYYY");
-      result.push(nextDate);
-    }
-    setDateList(result);
-  };
   const AddToMealPlan = async () => {
     if (!selectedDate && !selectedMeal) {
       Alert.alert("Error", "Please Select All Details");
@@ -82,40 +71,12 @@ export default function AddToMealActionSheet({
       >
         Add To Meal
       </Text>
-      <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 15 }}>
-        Select Date
-      </Text>
-      <FlatList
-        data={dateList}
-        numColumns={4}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => setSelectedDate(item)}
-            style={{
-              flex: 1,
-              alignItems: "center",
-              padding: 7,
-              borderWidth: selectedDate === item ? 2 : 1,
-              borderRadius: 10,
-              margin: 5,
-              backgroundColor:
-                selectedDate === item ? Colors.SECONDERY : Colors.WHITE,
-              borderColor: selectedDate === item ? Colors.PRIMARY : Colors.GRAY,
-            }}
-          >
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {moment(item, "DD/MM/YYYY").format("ddd")}
-            </Text>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              {moment(item, "DD/MM/YYYY").format("DD")}
-            </Text>
-            <Text style={{ fontSize: 16 }}>
-              {moment(item, "DD/MM/YYYY").format("MMM")}
-            </Text>
-          </TouchableOpacity>
-        )}
+
+      <DateSelectionCard
+        setSelectedDate={setSelectedDate}
+        selectedDate={selectedDate}
       />
+
       <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 15 }}>
         Select Meal
       </Text>

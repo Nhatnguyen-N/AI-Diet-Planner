@@ -18,7 +18,6 @@ export default function RecipeDetail() {
   const recipeDetail = useQuery(api.Recipes.GetRecipeById, {
     id: recipeId as Id<"recipes">,
   });
-  console.log(recipeDetail);
 
   // const GetRecipeDetail=()=>{
 

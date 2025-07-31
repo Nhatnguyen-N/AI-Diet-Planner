@@ -26,7 +26,8 @@ export default defineSchema({
     date: v.string(),
     mealType: v.string(),
     uid: v.id('users'),
-    status: v.optional(v.boolean())
+    status: v.optional(v.boolean()),
+    calories: v.optional(v.number())
   })
 })
 

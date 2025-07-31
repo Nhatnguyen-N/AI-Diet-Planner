@@ -27,3 +27,10 @@ export const GetRecipeById = query({
     return result;
   }
 })
+
+export const GetAllRecipes = query({
+  handler: async (ctx, args) => {
+    const result = await ctx.db.query('recipes').collect();
+    return result;
+  }
+})

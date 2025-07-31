@@ -8,7 +8,8 @@ export interface MealPlane {
   uid: Id<'users'>,
   _id: Id<'mealPlan'>,
   _creationTime: number,
-  status?: boolean
+  status?: boolean,
+  calories?: number,
 }
 export interface MealPlanWithRecipe {
   mealPlan: MealPlane,

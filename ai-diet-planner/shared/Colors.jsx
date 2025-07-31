@@ -6,4 +6,5 @@ export default {
   PINK: "#f542b3",
   GREEN: "#39b981",
   SECONDERY: "#fbf5ff",
+  RED: "red",
 };

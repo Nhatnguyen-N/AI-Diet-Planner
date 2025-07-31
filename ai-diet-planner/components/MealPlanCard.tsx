@@ -13,22 +13,22 @@ import { HugeiconsIcon } from "@hugeicons/react-native";
 import { CheckmarkSquare02Icon, SquareIcon } from "@hugeicons/core-free-icons";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useRefreshData } from "@/context/RefreshDataContext";
 interface MealPlanCardProps {
   mealPlanInfo: MealPlanWithRecipe;
-  refreshData: () => Promise<void>;
+  // refreshData?: () => Promise<void>;
 }
-export default function MealPlanCard({
-  mealPlanInfo,
-  refreshData,
-}: MealPlanCardProps) {
+export default function MealPlanCard({ mealPlanInfo }: MealPlanCardProps) {
   const updateStatus = useMutation(api.MealPlan.updateStatus);
+  const { setRefreshData } = useRefreshData();
   const onCheck = async (status: boolean) => {
     const result = await updateStatus({
       id: mealPlanInfo?.mealPlan?._id,
       status: status,
+      calories: mealPlanInfo?.recipe?.jsonData?.calories!,
     });
     Alert.alert("Great!", "Status Updated!");
-    refreshData();
+    setRefreshData(Date.now());
   };
   return (
     <View
